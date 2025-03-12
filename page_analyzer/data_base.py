@@ -1,4 +1,6 @@
 import psycopg2
+from psycopg2.extras import RealDictCursor
+
 
 
 class DatabaseConnection:
@@ -18,8 +20,46 @@ class DatabaseConnection:
 
 
 class UrlRepository:
-    def __init__(self, conn):
-        self.conn = conn
+    def __init__(self, database_url):
+        self.cursor = DatabaseConnection(database_url)
 
-    def
+    def add_url(self, url):
+        query = '''
+        INSERT INTO urls (name)
+        VALUES (%s)
+        RETURNING id
+        '''
+        with self.cursor as cur:
+            cur.execute(query, (url,))
+            id = cur.fetchone()['id']
+            return id
+
+
+    def find_url(self, url):
+        query = '''
+        SELECT id, name
+        FROM urls
+        WHERE name = %s
+        '''
+        with self.cursor as cur:
+            cur.execute(query, (url,))
+            url_info = cur.fetchone()
+            if not url_info:
+                return None
+            return url_info
+
+    def find_id(self, id):
+        query = '''
+        SELECT *
+        FROM urls
+        WHERE id = %s
+        '''
+        with self.cursor as cur:
+            cur.execute(query, (id,))
+            url_info = cur.fetchone()
+            if not url_info:
+                return None
+            return url_info
+
+
 

@@ -1,7 +1,8 @@
 from urllib.parse import urlparse
 
+import validators
 
-def normalize_url(url):
+def normalize_url(url: str) -> str:
     '''
     :param url:
     :return: normalized URL including only the scheme and host.
