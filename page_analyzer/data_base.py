@@ -72,5 +72,29 @@ class UrlRepository:
             all_urls = cur.fetchall()
             return all_urls
 
+    def add_url_check(self, data, url_info):
+        query = '''
+        INSERT INTO url_checks (url_id, status_code, h1, title, description)
+        VALUES (%s, %s, %s, %s, %s)
+        '''
+        with self.cursor as cur:
+            cur.execute(query,(
+                url_info.get('id'),
+                data.get('status'),
+                data.get('h1'),
+                data.get('title'),
+                data.get('description'),
+            ))
 
+    def get_url_checks(self, url_id):
+        query = '''
+        SELECT * 
+        FROM url_checks
+        WHERE url_id = %s
+        ORDER BY id DESC
+        '''
+        with self.cursor as cur:
+            cur.execute(query, (url_id,))
+            url_checks_info = cur.fetchall()
+            return url_checks_info
 

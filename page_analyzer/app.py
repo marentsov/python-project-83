@@ -42,14 +42,37 @@ def urls_index():
 def get_url(id):
     repo = UrlRepository(DATABASE_URL)
     url_info = repo.find_id(id)
+    #response = requests.get(url_info.get('name'))
+    #response.raise_for_status()
+
+    #status = response.status_code
+    #data = get_data(response)
 
     if not url_info:
         return 'OOPS', 404
 
     return render_template(
         'url.html',
-        url_info=url_info
+        url_info=url_info,
     )
+
+@app.route('/urls/<int:id>', methods=['POST'])
+def get_url_data(id):
+    repo = UrlRepository(DATABASE_URL)
+    url_info = repo.find_id(id)
+    response = requests.get(url_info.get('name'))
+    response.raise_for_status()
+    status = response.status_code
+    data = get_data(response)
+    data['status'] = status
+    repo.add_url_check(data, url_info)
+    url_checks = repo.get_url_checks(id)
+    return render_template(
+        'url.html',
+        url_info=url_info,
+        url_checks=url_checks,
+    )
+
 
 @app.route('/urls', methods=['GET'])
 def get_urls():
