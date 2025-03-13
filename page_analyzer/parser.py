@@ -11,7 +11,7 @@ def get_data(response):
 
     data['h1'] = h1_tag
     data['title'] = title_tag
-    data['description'] = description_tag.get('content') if description_tag else None
+    data['description'] = description_tag.get('content') if description_tag else None #noqa
 
     return data
 

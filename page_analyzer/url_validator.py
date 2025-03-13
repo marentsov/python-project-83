@@ -2,6 +2,7 @@ from urllib.parse import urlparse
 
 import validators
 
+
 def normalize_url(url: str) -> str:
     '''
     :param url:

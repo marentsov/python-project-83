@@ -2,7 +2,6 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 
 
-
 class DatabaseConnection:
     def __init__(self, database_url):
         self.database_url = database_url
@@ -33,7 +32,6 @@ class UrlRepository:
             cur.execute(query, (url,))
             id = cur.fetchone()['id']
             return id
-
 
     def find_url(self, url):
         query = '''
@@ -78,7 +76,7 @@ class UrlRepository:
         VALUES (%s, %s, %s, %s, %s)
         '''
         with self.cursor as cur:
-            cur.execute(query,(
+            cur.execute(query, (
                 url_info.get('id'),
                 data.get('status'),
                 data.get('h1'),

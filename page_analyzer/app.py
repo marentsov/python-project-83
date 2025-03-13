@@ -1,14 +1,12 @@
 import os
+
 import requests
-import psycopg2
-
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for
 
+from page_analyzer.data_base import UrlRepository
 from page_analyzer.parser import get_data
 from page_analyzer.url_validator import normalize_url
-from page_analyzer.url_validator import validate_url
-from page_analyzer.data_base import UrlRepository
 
 load_dotenv()
 app = Flask(__name__)
@@ -42,11 +40,11 @@ def urls_index():
 def get_url(id):
     repo = UrlRepository(DATABASE_URL)
     url_info = repo.find_id(id)
-    #response = requests.get(url_info.get('name'))
-    #response.raise_for_status()
+    # response = requests.get(url_info.get('name'))
+    # response.raise_for_status()
 
-    #status = response.status_code
-    #data = get_data(response)
+    # status = response.status_code
+    # data = get_data(response)
 
     if not url_info:
         return 'OOPS', 404
@@ -55,6 +53,7 @@ def get_url(id):
         'url.html',
         url_info=url_info,
     )
+
 
 @app.route('/urls/<int:id>', methods=['POST'])
 def get_url_data(id):
