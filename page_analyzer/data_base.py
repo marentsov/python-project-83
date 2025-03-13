@@ -61,5 +61,16 @@ class UrlRepository:
                 return None
             return url_info
 
+    def get_all_urls(self):
+        query = '''
+        SELECT * 
+        FROM urls
+        ORDER BY id DESC
+        '''
+        with self.cursor as cur:
+            cur.execute(query)
+            all_urls = cur.fetchall()
+            return all_urls
+
 
 

@@ -51,6 +51,15 @@ def get_url(id):
         url_info=url_info
     )
 
+@app.route('/urls', methods=['GET'])
+def get_urls():
+    repo = UrlRepository(DATABASE_URL)
+    urls_info = repo.get_all_urls()
+    return render_template(
+        'urls.html',
+        urls_info=urls_info,
+    )
+
 
 
 
