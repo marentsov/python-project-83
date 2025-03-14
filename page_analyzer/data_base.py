@@ -105,7 +105,6 @@ class UrlRepository:
 
             return url_checks_info
 
-
     def get_all_urls_checks(self):
         query = '''
         SELECT DISTINCT ON (urls.id)
