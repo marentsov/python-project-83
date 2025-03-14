@@ -40,11 +40,6 @@ def urls_index():
 def get_url(id):
     repo = UrlRepository(DATABASE_URL)
     url_info = repo.find_id(id)
-    # response = requests.get(url_info.get('name'))
-    # response.raise_for_status()
-
-    # status = response.status_code
-    # data = get_data(response)
 
     if not url_info:
         return 'OOPS', 404
@@ -59,7 +54,7 @@ def get_url(id):
 def get_url_data(id):
     repo = UrlRepository(DATABASE_URL)
     url_info = repo.find_id(id)
-    response = requests.get(url_info.get('name'))
+    response = requests.get(url_info.get('name'), timeout=0.5)
     response.raise_for_status()
     status = response.status_code
     data = get_data(response)
@@ -76,10 +71,10 @@ def get_url_data(id):
 @app.route('/urls', methods=['GET'])
 def get_urls():
     repo = UrlRepository(DATABASE_URL)
-    urls_info = repo.get_all_urls()
+    all_urls_checks = repo.get_all_urls_checks()
     return render_template(
         'urls.html',
-        urls_info=urls_info,
+        all_urls_checks=all_urls_checks,
     )
 
 
