@@ -2,7 +2,7 @@ import os
 
 import requests
 from dotenv import load_dotenv
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, url_for
 
 from page_analyzer.data_base import UrlRepository
 from page_analyzer.parser import get_data
@@ -42,7 +42,7 @@ def get_url(id):
     url_info = repo.find_id(id)
 
     if not url_info:
-        return 'OOPS', 404
+        abort(404)
 
     return render_template(
         'url.html',
@@ -50,16 +50,23 @@ def get_url(id):
     )
 
 
-@app.route('/urls/<int:id>', methods=['POST'])
+@app.route('/urls/<int:id>/checks', methods=['POST'])
 def get_url_data(id):
     repo = UrlRepository(DATABASE_URL)
     url_info = repo.find_id(id)
-    response = requests.get(url_info.get('name'), timeout=0.5)
-    response.raise_for_status()
+
+    try:
+        response = requests.get(url_info.get('name'), timeout=0.5)
+        response.raise_for_status()
+    except requests.ReqestException:
+        flash('Произошла ошибка при проверке', 'danger')
+        return redirect(url_for('get_url', id=id))
+
     status = response.status_code
     data = get_data(response)
     data['status'] = status
     repo.add_url_check(data, url_info)
+    flash('Страница успешно проверена', 'success')
     url_checks = repo.get_url_checks(id)
     return render_template(
         'url.html',
@@ -77,6 +84,6 @@ def get_urls():
         all_urls_checks=all_urls_checks,
     )
 
-
-
-
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('errors/404.html'), 404
