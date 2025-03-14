@@ -98,15 +98,14 @@ class UrlRepository:
 
     def get_all_urls_checks(self):
         query = '''
-        
-SELECT DISTINCT ON (urls.id)
- urls.id AS id, 
-    urls.name AS name,
-    url_checks.created_at  AS created_at,
-    url_checks.status_code AS status_code
-FROM urls
-LEFT JOIN url_checks ON 
- urls.id = url_checks.url_id;
+        SELECT DISTINCT ON (urls.id)
+            urls.id AS id, 
+            urls.name AS name,
+            url_checks.created_at  AS created_at,
+            url_checks.status_code AS status_code
+        FROM urls
+        LEFT JOIN url_checks ON 
+            urls.id = url_checks.url_id;
         '''
         with self.cursor as cur:
             cur.execute(query)
