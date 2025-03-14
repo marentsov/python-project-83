@@ -73,7 +73,7 @@ def get_url_data(id):
     try:
         response = requests.get(url_info.get('name'), timeout=0.3)
         response.raise_for_status()
-    except requests.ReqestException:
+    except requests.RequestException:
         flash('Произошла ошибка при проверке', 'danger')
         return redirect(url_for('get_url', id=id))
 
