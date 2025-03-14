@@ -2,7 +2,15 @@ import os
 
 import requests
 from dotenv import load_dotenv
-from flask import Flask, abort, flash, redirect, render_template, request, url_for
+from flask import (
+    Flask,
+    abort,
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 
 from page_analyzer.data_base import UrlRepository
 from page_analyzer.parser import get_data
@@ -63,7 +71,7 @@ def get_url_data(id):
     url_info = repo.find_id(id)
 
     try:
-        response = requests.get(url_info.get('name'), timeout=0.5)
+        response = requests.get(url_info.get('name'), timeout=0.3)
         response.raise_for_status()
     except requests.ReqestException:
         flash('Произошла ошибка при проверке', 'danger')
@@ -90,6 +98,7 @@ def get_urls():
         'urls.html',
         all_urls_checks=all_urls_checks,
     )
+
 
 @app.errorhandler(404)
 def page_not_found(error):
