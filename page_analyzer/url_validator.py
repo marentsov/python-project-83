@@ -16,7 +16,13 @@ def normalize_url(url: str) -> str:
 
 
 def validate_url(url):
-    errors = []
-    if not validators.url(url) or len(url) > 255:
-        errors.append(('Некорректный URL', 'danger'))
+    errors = {}
+
+    if url == "":
+        errors['url'] = 'URL не может быть пустым'
+    if not validators.url(url):
+        errors['url'] = 'Некорректный формат URL'
+    if len(url) > 255:
+        errors['url'] = 'Слишком длинный URL (должен быть короче 255 символов)'
+
     return errors

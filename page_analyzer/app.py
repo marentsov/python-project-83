@@ -6,7 +6,7 @@ from flask import Flask, abort, flash, redirect, render_template, request, url_f
 
 from page_analyzer.data_base import UrlRepository
 from page_analyzer.parser import get_data
-from page_analyzer.url_validator import normalize_url
+from page_analyzer.url_validator import normalize_url, validate_url
 
 load_dotenv()
 app = Flask(__name__)
@@ -25,6 +25,13 @@ def index():
 def urls_index():
     url = request.form.to_dict()
     normalized_url = normalize_url(url['url'])
+    errors = validate_url(normalized_url)
+
+    if errors:
+        flash('Некорректный URL', 'danger')
+        return render_template(
+            'index.html',
+        )
 
     repo = UrlRepository(DATABASE_URL)
     url_info = repo.find_url(normalized_url)
