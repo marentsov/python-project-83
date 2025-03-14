@@ -32,8 +32,7 @@ def index():
 @app.route('/urls', methods=['POST'])
 def urls_index():
     url = request.form.to_dict()
-    normalized_url = normalize_url(url['url'])
-    errors = validate_url(normalized_url)
+    errors = validate_url(url['url'])
 
     if errors:
         flash('Некорректный URL', 'danger')
@@ -41,6 +40,7 @@ def urls_index():
             'index.html',
         ), 422
 
+    normalized_url = normalize_url(url['url'])
     repo = UrlRepository(DATABASE_URL)
     url_info = repo.find_url(normalized_url)
     if url_info is not None:
