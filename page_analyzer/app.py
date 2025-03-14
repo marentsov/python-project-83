@@ -39,7 +39,7 @@ def urls_index():
         flash('Некорректный URL', 'danger')
         return render_template(
             'index.html',
-        )
+        ), 422
 
     repo = UrlRepository(DATABASE_URL)
     url_info = repo.find_url(normalized_url)
