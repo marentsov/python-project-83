@@ -19,13 +19,6 @@ jobs:
 
         uses: actions/setup-python@v4
 
-      - uses: qltysh/qlty-action/coverage@main
-        with:
-          coverage-token: {{secrets.QLTY_COVERAGE_TOKEN}}
-          files: reports/lcov.info
-
-        uses: actions/setup-python@v4
-
       - name: Install dependencies
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
