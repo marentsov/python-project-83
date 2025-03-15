@@ -3,6 +3,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/marentsov/python-project-83/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/marentsov/python-project-83/actions)
 [![my check](https://github.com/marentsov/python-project-83/actions/workflows/my_workflow.yml/badge.svg)](https://github.com/marentsov/python-project-83/actions/workflows/my_workflow.yml)
+[![Maintainability](https://qlty.sh/badges/02a5b00d-492e-4683-953b-4718a5ea1aee/maintainability.svg)](https://qlty.sh/gh/marentsov/projects/python-project-83)
 ****
 
 [Демонстрация проекта на render.com](https://python-project-83-83hv.onrender.comm)
