@@ -2,6 +2,7 @@
 ****
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/marentsov/python-project-83/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/marentsov/python-project-83/actions)
+[![my check](https://github.com/marentsov/python-project-83/actions/workflows/my_workflow.yml/badge.svg)](https://github.com/marentsov/python-project-83/actions/workflows/my_workflow.yml)
 ****
 
 [Демонстрация проекта на render.com](https://python-project-83-83hv.onrender.comm)
