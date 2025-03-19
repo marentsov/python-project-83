@@ -96,12 +96,12 @@ class UrlRepository:
             url_checks_info = cur.fetchall()
 
             for row in url_checks_info:
-               if row['h1'] is None:
-                   row['h1'] = ''
-               if row['title'] is None:
-                   row['title'] = ''
-               if row['description'] is None:
-                   row['description'] = ''
+                if row['h1'] is None:
+                    row['h1'] = ''
+                if row['title'] is None:
+                    row['title'] = ''
+                if row['description'] is None:
+                    row['description'] = ''
 
             return url_checks_info
 
